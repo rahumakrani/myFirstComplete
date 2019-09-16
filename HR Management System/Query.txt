@@ -1,0 +1,113 @@
+create database hr
+
+use hr
+
+create table tbl_department
+(
+d_id int identity primary key,
+d_name nvarchar(20) not null unique
+
+)
+
+SELECT * FROM tbl_department
+insert into tbl_department
+values ('IT')
+insert into tbl_department
+values ('ACCOUNT')
+insert into tbl_department
+values ('MANAGEMENT')
+insert into tbl_department
+values ('HR')
+insert into tbl_department
+values ('NETWORK SUPPORT')
+
+SELECT * FROM tbl_department
+
+create table tbl_applicant_personal
+(
+ap_id int identity primary key,
+ap_name nvarchar(25) not null unique,
+ap_aadhar nvarchar(25) not null unique,
+ap_email nvarchar(25) not null unique,
+ap_phone1 nvarchar(25) not null unique,
+ap_phone2 nvarchar(25) not null unique,
+ap_image nvarchar(max) not null,
+ap_gender int,
+ap_dob date
+)
+
+create table tbl_ssc
+(
+ssc_id int identity primary key,
+ssc_percentage float,
+ssc_institute nvarchar(35) not null,
+ssc_doc nvarchar(max),
+ssc_fk_ap_id int foreign key references tbl_applicant_personal(ap_id)
+)
+create table tbl_hsc
+(
+hsc_id int identity primary key,
+hsc_percentage float,
+hsc_institute nvarchar(35) not null,
+hsc_doc nvarchar(max),
+hsc_fk_ap_id int foreign key references tbl_applicant_personal(ap_id)
+)
+create table tbl_graduation
+(
+grad_id int identity primary key,
+grad_percentage float,
+grad_institute nvarchar(35) not null,
+grad_doc nvarchar(max),
+grad_fk_ap_id int foreign key references tbl_applicant_personal(ap_id)
+)
+create table tbl_master
+(
+mas_id int identity primary key,
+mas_percentage float,
+mas_institute nvarchar(35) not null,
+mas_doc nvarchar(max),
+mas_fk_ap_id int foreign key references tbl_applicant_personal(ap_id)
+)
+
+-------------------------------------------------------------------------------------------------------------------------
+***************Store procedure ******************
+-------------------------------------------------------------------------------------------------------------------------
+
+create proc sp_applicant_personal
+(
+@ap_name nvarchar(25),
+@ap_aadhar nvarchar(25),
+@ap_email nvarchar(25) ,
+@ap_phone1 nvarchar(25),
+@ap_phone2 nvarchar(25) ,
+@ap_image nvarchar(max) ,
+@ap_gender int,
+@ap_dob date
+)
+as
+begin
+insert into tbl_applicant_personal values
+(
+@ap_name ,
+@ap_aadhar,
+@ap_email ,
+@ap_phone1,
+@ap_phone2 ,
+@ap_image  ,
+@ap_gender,
+@ap_dob
+)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
